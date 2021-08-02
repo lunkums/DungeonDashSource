@@ -6,6 +6,20 @@ the game.
 
 ## [August '21 Update] : 2021/08/02
 
+Features
+
+  - Input including input queueing
+  - Movement
+  - Animated states with fluid transitions
+  - Bat and Wolf enemies
+  - Basic level generator
+  - Health pickup
+  - Basic health UI
+  - Pause menu
+  - Sound manager with adjustable audio levels
+
+Models
+
   - STATE PATTERN used for player and enemies
   - STACK MODEL used for pause/options menu
   - C# EVENTS used to segregate behaviour between unrelated scripts such as
