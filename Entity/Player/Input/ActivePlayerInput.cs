@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 
-public class ActivePlayerInput : IPlayerInput
+public class ActivePlayerInput : PlayerInput
 {
-    public virtual bool Jump { get { return Input.GetButtonDown("Jump"); } private set { } }
+    public override bool Jump { get => Input.GetButtonDown("Jump"); }
 
-    public virtual bool Attack { get { return Input.GetButtonDown("Fire1"); } private set { } }
+    public override bool JumpPressed { get => Input.GetButton("Jump"); }
+	
+    public override bool Attack { get => Input.GetButtonDown("Fire1"); }
 
-    public virtual bool Roll { get { return Input.GetButtonDown("Fire2"); } private set { } }
+    public override bool Roll { get => Input.GetButtonDown("Fire2"); }
 
-    public virtual bool Test { get { return Input.GetButtonDown("Test"); } private set { } }
+    public override bool Test { get => Input.GetButtonDown("Test"); }
 }

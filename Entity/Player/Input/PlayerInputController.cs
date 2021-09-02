@@ -9,19 +9,24 @@ public class PlayerInputController : MonoBehaviour
     private List<ButtonInput> buttonInputs;
 
     public bool Jump => GetButtonStatus("Jump");
+    public bool JumpPressed => GetButtonStatus("Jump Pressed");
     public bool Attack => GetButtonStatus("Attack");
     public bool Roll => GetButtonStatus("Roll");
     public bool Test => GetButtonStatus("Test");
+    public bool Start => GetButtonStatus("Start");
 
     private void Awake()
     {
         EnableInput(true);
-        buttonInputs = new List<ButtonInput>();
-
-        buttonInputs.Add(new ButtonInput("Jump", bufferTime));
-        buttonInputs.Add(new ButtonInput("Attack", bufferTime));
-        buttonInputs.Add(new ButtonInput("Roll", bufferTime));
-        buttonInputs.Add(new ButtonInput("Test", bufferTime));
+        buttonInputs = new List<ButtonInput>
+        {
+            new ButtonInput("Jump", bufferTime),
+            new ButtonInput("Jump Pressed", bufferTime),
+            new ButtonInput("Attack", bufferTime),
+            new ButtonInput("Roll", bufferTime),
+            new ButtonInput("Test", bufferTime),
+            new ButtonInput("Start", bufferTime)
+        };
     }
 
     // Update is called once per frame
@@ -66,6 +71,9 @@ public class PlayerInputController : MonoBehaviour
                 case ("Jump"):
                     button.SetButtonStatus(input.Jump, Time.time);
                     break;
+                case ("Jump Pressed"):
+                    button.SetButtonStatus(input.JumpPressed, Time.time);
+                    break;
                 case ("Attack"):
                     button.SetButtonStatus(input.Attack, Time.time);
                     break;
@@ -74,6 +82,9 @@ public class PlayerInputController : MonoBehaviour
                     break;
                 case ("Test"):
                     button.SetButtonStatus(input.Test, Time.time);
+                    break;
+                case ("Start"):
+                    button.SetButtonStatus(input.Start, Time.time);
                     break;
             }
         }

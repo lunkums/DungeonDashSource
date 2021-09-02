@@ -1,18 +1,7 @@
-public class ChaseWolfState : WolfState
+public class ChaseWolfState : GroundedWolfState
 {
     public ChaseWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Run")
     {
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-        Entity.Movement.SetForwardVelocity();
     }
 
     public override void FixedUpdate()
@@ -22,6 +11,7 @@ public class ChaseWolfState : WolfState
 
     public override void Update()
     {
+        base.Update();
         if (Entity.Input.IsPlayerInAttackRange())
             StateMachine.SetState(new AnticipationWolfState(Entity, StateMachine));
         else if (Entity.Input.IsPlayerBehind() && GameManager.instance.Player.Movement.IsGrounded())

@@ -1,4 +1,4 @@
-public class AnticipationWolfState : WolfState
+public class AnticipationWolfState : GroundedWolfState
 {
     public AnticipationWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Anticipation")
     {
@@ -12,6 +12,7 @@ public class AnticipationWolfState : WolfState
 
     public override void Update()
     {
+        base.Update();
         if (IsCurrentAnimationPastTime(1.0f))
             StateMachine.SetState(new AttackWolfState(Entity, StateMachine));
     }

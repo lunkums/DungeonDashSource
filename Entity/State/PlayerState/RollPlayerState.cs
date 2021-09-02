@@ -1,4 +1,4 @@
-public class RollPlayerState : PlayerState
+public class RollPlayerState : GroundedPlayerState
 {
     public RollPlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, "Roll")
     {
@@ -23,6 +23,8 @@ public class RollPlayerState : PlayerState
         {
             if (Entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
                 StateMachine.SetState(new RunPlayerState(Entity, StateMachine));
+            else if (Entity.InputController.Jump)
+                StateMachine.SetState(new JumpPlayerState(Entity, StateMachine));
         }
         else
         {

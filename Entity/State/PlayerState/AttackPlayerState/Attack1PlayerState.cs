@@ -2,7 +2,7 @@ public class Attack1PlayerState : AttackPlayerState
 {
     public override int AttackNumber => 1;
     public override float AnticipationTime => 0.20f;
-    public override float RecoveryTime => 0.40f;
+    public override float RecoveryTime => 0.50f;
 
     public Attack1PlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, "Attack")
     {

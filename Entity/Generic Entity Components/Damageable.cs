@@ -42,11 +42,12 @@ public class Damageable : MonoBehaviour, IDamageable
         currentTime += Time.deltaTime;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool bypassRecoveryInterval = false)
     {
-        if (CanBeDamaged())
+        if (CanBeDamaged() || bypassRecoveryInterval)
         {
             currentHealth -= damage;
+            nextDamageTime = currentTime + recoveryTimeInterval;
 
             if (currentHealth <= 0)
             {
@@ -56,8 +57,6 @@ public class Damageable : MonoBehaviour, IDamageable
             {
                 OnDamaged?.Invoke();
             }
-
-            nextDamageTime = currentTime + recoveryTimeInterval;
         }
     }
 

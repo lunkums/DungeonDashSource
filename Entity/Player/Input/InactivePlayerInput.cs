@@ -1,10 +1,12 @@
-﻿public class InactivePlayerInput : IPlayerInput
+﻿public class InactivePlayerInput : PlayerInput
 {
-    public bool Jump { get { return false; } }
+    public override bool Jump { get => false; }
 
-    public bool Attack { get { return false; } }
+    public override bool JumpPressed { get => false; }
 
-    public bool Roll { get { return false; } }
+    public override bool Attack { get => false; }
 
-    public bool Test { get { return false; } }
+    public override bool Roll { get => false; }
+
+    public override bool Test { get => false; }
 }

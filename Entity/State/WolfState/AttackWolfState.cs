@@ -1,4 +1,4 @@
-public class AttackWolfState: WolfState
+public class AttackWolfState: FallWolfState
 {
     public AttackWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Attack")
     {
@@ -15,7 +15,6 @@ public class AttackWolfState: WolfState
     {
         base.Exit();
         Entity.Input.EnableHitbox(false);
-        Entity.Movement.SetForwardVelocity();
     }
 
     public override void FixedUpdate()
@@ -26,7 +25,6 @@ public class AttackWolfState: WolfState
     public override void Update()
     {
         if (IsCurrentAnimationPastTime(1.0f))
-            if (Entity.Movement.IsGrounded())
-                StateMachine.SetState(new LandWolfState(Entity, StateMachine));
+            base.Update();
     }
 }

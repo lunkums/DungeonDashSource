@@ -13,9 +13,9 @@ public class MaterialTint : MonoBehaviour
 
     private void Update()
     {
-        if (materialTintColor.a > 0)
+        if (IsTintVisible())
         {
-            materialTintColor.a = Mathf.Clamp01(materialTintColor.a - tintFadeSpeed * Time.deltaTime);
+            SetTintAlpha(Mathf.Clamp01(materialTintColor.a - tintFadeSpeed * Time.deltaTime));
             material.SetColor("_Tint", materialTintColor);
         }
     }
@@ -25,14 +25,18 @@ public class MaterialTint : MonoBehaviour
         this.material = material;
     }
 
-    public void SetTintColor(Color color)
+    public void SetTintAlpha(float alpha)
     {
-        materialTintColor = color;
-        material.SetColor("_Tint", materialTintColor);
+        materialTintColor.a = alpha;
     }
 
     public void SetTintFadeSpeed(float tintFadeSpeed)
     {
         this.tintFadeSpeed = tintFadeSpeed;
+    }
+
+    public bool IsTintVisible()
+    {
+        return materialTintColor.a > 0;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InfiniteLevelGenerator : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class InfiniteLevelGenerator : MonoBehaviour
 
     private void Start()
     {
+        var scene = gameObject.scene;
+        SceneManager.SetActiveScene(scene);
         player = GameManager.instance.Player.transform;
         lastEndPoint = firstLevelPart.Find("End Point").position;
     }

@@ -10,7 +10,7 @@ public class Player : Entity
     public PlayerMovement Movement => movement;
     public PlayerAttackController AttackController => attackController;
 
-    private void Awake()
+    private void Start()
     {
         GameManager.instance.Player = this;
     }

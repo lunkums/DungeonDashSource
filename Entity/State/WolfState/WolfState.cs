@@ -11,6 +11,7 @@ public abstract class WolfState : AnimatedState
 
     public override void FixedUpdate()
     {
+        Entity.Movement.SetForwardVelocity();
     }
 
     public override void Update()

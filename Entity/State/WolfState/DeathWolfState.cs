@@ -13,6 +13,11 @@ public class DeathWolfState : WolfState
         Entity.Damageable.enabled = false;
     }
 
+    public override void FixedUpdate()
+    {
+        Entity.Movement.SetForwardVelocity(0);
+    }
+
     public override void Exit()
     {
         base.Exit();

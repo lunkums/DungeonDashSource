@@ -48,6 +48,13 @@ public class EntityMovement : MonoBehaviour
         Rigidbody2D.velocity = newVelocity;
     }
 
+    public void Jump(float upwardJumpVelocity)
+    {
+        var newVelocity = Rigidbody2D.velocity;
+        newVelocity.y = upwardJumpVelocity;
+        Rigidbody2D.velocity = newVelocity;
+    }
+
     public void Stop()
     {
         Rigidbody2D.velocity = Vector2.zero;

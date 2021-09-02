@@ -4,6 +4,21 @@ Includes significant additions made to the source code of Dungeon Dash
 (name subject to change) and some of the software models used to build
 the game.
 
+## [September '21 Update] : 2021/09/02
+
+Features
+
+  - (Dev) Better multiscene editing with a dependent components scripts
+  - Variable jump height
+  - Smart wolf AI (jumps over pits while chasing the player)
+  - Score counter (only works with distance, no points for combat yet)
+  - Player sprite flickers instead of flashes during recovery phase
+
+Models
+
+  - RAYCASTING used for wolf AI
+
+
 ## [August '21 Update] : 2021/08/02
 
 Features

@@ -7,6 +7,8 @@ public class WolfInput : MonoBehaviour
     [SerializeField] private float attackRadius;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private GameObject hitbox;
+    [SerializeField] private Transform rayPoint;
+    [SerializeField] private LayerMask raycastLayer;
 
     public GameManager GameManager => gameManager;
 
@@ -45,5 +47,19 @@ public class WolfInput : MonoBehaviour
     public void EnableHitbox(bool enabled)
     {
         hitbox.SetActive(enabled);
+    }
+
+    public bool IsThereAHole()
+    {
+        bool holeDetected = true;
+
+        Vector2 direction = (rayPoint.transform.position - transform.position).normalized;
+        Debug.DrawRay(transform.position, direction / 2.0f, Color.red);
+        var rayHit = Physics2D.Raycast(transform.position, direction, 1 / 2.0f, raycastLayer);
+
+        if (rayHit)
+            holeDetected = false;
+
+        return holeDetected;
     }
 }
