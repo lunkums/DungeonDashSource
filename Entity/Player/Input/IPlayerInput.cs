@@ -11,4 +11,6 @@
     bool Test { get; }
 
     bool Start { get; }
+
+    bool FallThrough { get; }
 }

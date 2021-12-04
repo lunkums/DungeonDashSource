@@ -1,10 +1,10 @@
-﻿public abstract class AnimatedState : State
+﻿public abstract class AnimatedState<E> : State<E> where E : Entity
 {
     private string animatorTrigger;
 
     public string AnimatorTrigger => animatorTrigger;
 
-    public AnimatedState(IEntity entity, StateMachine stateMachine, string animatorTrigger) : base(entity, stateMachine)
+    public AnimatedState(E entity, StateMachine stateMachine, string animatorTrigger) : base(entity, stateMachine)
     {
         this.animatorTrigger = animatorTrigger;
     }

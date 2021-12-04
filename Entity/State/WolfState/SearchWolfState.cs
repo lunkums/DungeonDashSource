@@ -1,8 +1,6 @@
 public class SearchWolfState : GroundedWolfState
 {
-    public SearchWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Idle")
-    {
-    }
+    public SearchWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Idle") { }
 
     public override void Update()
     {
@@ -10,9 +8,9 @@ public class SearchWolfState : GroundedWolfState
         if (Entity.Input.IsPlayerInSearchRange())
         {
             if (Entity.Input.IsPlayerBehind())
-                StateMachine.SetState(new RetreatWolfState(Entity, StateMachine));
+                StateMachine.SetState(Entity.RetreatState(StateMachine));
             else
-                StateMachine.SetState(new ChaseWolfState(Entity, StateMachine));
+                StateMachine.SetState(Entity.ChaseState(StateMachine));
         }
     }
 }

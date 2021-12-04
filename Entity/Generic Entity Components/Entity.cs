@@ -9,9 +9,14 @@ public abstract class Entity : MonoBehaviour, IEntity
     public AudioManager Audio => AudioManager.instance;
     public Damageable Damageable => damageable;
 
-    public abstract State DamagedState(StateMachine stateMachine);
+    public void Respawn(Vector2 position)
+    {
+        gameObject.transform.position = position;
+    }
 
-    public abstract State DeathState(StateMachine stateMachine);
+    public abstract IState DamagedState(StateMachine stateMachine);
 
-    public abstract State InitialState(StateMachine stateMachine);
+    public abstract IState DeathState(StateMachine stateMachine);
+
+    public abstract IState InitialState(StateMachine stateMachine);
 }

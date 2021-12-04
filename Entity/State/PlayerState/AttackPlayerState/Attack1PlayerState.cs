@@ -4,13 +4,11 @@ public class Attack1PlayerState : AttackPlayerState
     public override float AnticipationTime => 0.20f;
     public override float RecoveryTime => 0.50f;
 
-    public Attack1PlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, "Attack")
-    {
-    }
+    public Attack1PlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, "Attack") { }
 
     protected override void SetNextAttackState()
     {
         if (IsCurrentAnimationPastTime(RecoveryTime))
-            StateMachine.SetState(new Attack2PlayerState(Entity, StateMachine));
+            StateMachine.SetState(Entity.Attack2State(StateMachine));
     }
 }

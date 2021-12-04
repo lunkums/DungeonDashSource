@@ -1,20 +1,11 @@
-public abstract class WolfState : AnimatedState
+public abstract class WolfState : AnimatedState<Wolf>
 {
-    private Wolf entity;
-
-    public new Wolf Entity => entity;
-
-    public WolfState(Wolf entity, StateMachine stateMachine, string animatorTrigger) : base(entity, stateMachine, animatorTrigger)
-    {
-        this.entity = entity;
-    }
+    public WolfState(Wolf entity, StateMachine stateMachine, string animatorTrigger) : base(entity, stateMachine, animatorTrigger) { }
 
     public override void FixedUpdate()
     {
         Entity.Movement.SetForwardVelocity();
     }
 
-    public override void Update()
-    {
-    }
+    public override void Update() { }
 }

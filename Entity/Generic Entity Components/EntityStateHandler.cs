@@ -5,7 +5,7 @@ public sealed class EntityStateHandler : MonoBehaviour
     [SerializeField] private Entity entity;
     private StateMachine stateMachine;
 
-    void Start()
+    private void OnEnable()
     {
         stateMachine = new StateMachine(entity);
     }

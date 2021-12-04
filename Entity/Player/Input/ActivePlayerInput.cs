@@ -2,13 +2,15 @@
 
 public class ActivePlayerInput : PlayerInput
 {
-    public override bool Jump { get => Input.GetButtonDown("Jump"); }
+    public override bool Jump => Input.GetButtonDown("Jump");
 
-    public override bool JumpPressed { get => Input.GetButton("Jump"); }
+    public override bool JumpPressed => Input.GetButton("Jump");
 	
-    public override bool Attack { get => Input.GetButtonDown("Fire1"); }
+    public override bool Attack => Input.GetButtonDown("Fire1");
 
-    public override bool Roll { get => Input.GetButtonDown("Fire2"); }
+    public override bool Roll => Input.GetButtonDown("Fire2");
 
-    public override bool Test { get => Input.GetButtonDown("Test"); }
+    public override bool Test => Input.GetButtonDown("Test");
+
+    public override bool FallThrough => Input.GetButtonDown("Fall Through");
 }

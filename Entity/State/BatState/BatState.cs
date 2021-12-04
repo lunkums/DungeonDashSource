@@ -1,16 +1,11 @@
-public abstract class BatState : AnimatedState
+public abstract class BatState : AnimatedState<Bat>
 {
-    private Bat entity;
-
-    public new Bat Entity => entity;
-
-    public BatState(Bat entity, StateMachine stateMachine, string animatorTrigger) : base(entity, stateMachine, animatorTrigger)
-    {
-        this.entity = entity;
-    }
+    public BatState(Bat entity, StateMachine stateMachine, string animatorTrigger) : base(entity, stateMachine, animatorTrigger) { }
 
     public override void FixedUpdate()
     {
         Entity.Movement.SetVelocity();
     }
+
+    public override void Update() { }
 }

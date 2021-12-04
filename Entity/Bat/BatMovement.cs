@@ -1,38 +1,43 @@
 using UnityEngine;
 
-public class BatMovement : MonoBehaviour
+public class BatMovement : EntityMovement
 {
     [Range(0.1f, 1.0f)]
     [SerializeField] private float speedFactor = 0.8f;
-    [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private float amplitude = 2.0f;
     [SerializeField] private float period = 2.0f;
     private float timeSinceBirth;
     private float horizontalShift;
 
     public float SpeedFactor => speedFactor;
-    public Rigidbody2D Rigidbody2D => _rigidbody2D;
 
-    private void Awake()
+    private void SetStartingPosition()
     {
-        timeSinceBirth = 0f;
-        horizontalShift = Random.Range(0, Mathf.PI);
-
         var startingPosition = gameObject.transform.position;
+        timeSinceBirth = 0f;
+        horizontalShift = Random.Range(0f, Mathf.PI);
         startingPosition.y += amplitude * Mathf.Sin(horizontalShift);
         gameObject.transform.position = startingPosition;
     }
 
-    public void SetVelocity()
+    private void Initialize()
     {
-        SetForwardVelocity();
-        SetUpwardVelocity();
+        SetStartingPosition();
+        // Undo any changes made by EnableFreeFall()
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
+        Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        Rigidbody2D.gravityScale = 0f;
+    }
+
+    private void OnEnable()
+    {
+        Initialize();
     }
 
     private void SetForwardVelocity()
     {
         var newVelocity = Rigidbody2D.velocity;
-        newVelocity.x = EntityMovement.GlobalSpeed * speedFactor;
+        newVelocity.x = GroundedEntityMovement.GlobalSpeed * speedFactor;
         Rigidbody2D.velocity = newVelocity;
     }
 
@@ -58,9 +63,15 @@ public class BatMovement : MonoBehaviour
 
     public void EnableFreeFall()
     {
-        gameObject.layer = 12;
-        _rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-        _rigidbody2D.gravityScale = 1.0f;
+        gameObject.layer = LayerMask.NameToLayer("Ignore All");
+        Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        Rigidbody2D.gravityScale = 1.0f;
         SetUpwardVelocity(4.0f);
+    }
+
+    public void SetVelocity()
+    {
+        SetForwardVelocity();
+        SetUpwardVelocity();
     }
 }

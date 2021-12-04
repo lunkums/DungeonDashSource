@@ -1,23 +1,29 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InfiniteLevelGenerator : MonoBehaviour
 {
-    private const int DistanceUntilLoadNextPart = 10;
-
-    [SerializeField] private Transform firstLevelPart;
-    [SerializeField] private List<Transform> levelPartList;
+    [SerializeField] private int DistanceUntilLoadNextPart = 10;
+    [SerializeField] private Transform firstEndPoint;
+    [SerializeField] private List<Transform> chunkList;
+    [SerializeField] private Transform chunkPrefab;
 
     private Transform player;
     private Vector2 lastEndPoint;
+    private Queue<Transform> chunkQueue;
+    private int maxPreloadedChunks = 5;
+    private Vector2 tempStartPosition = new Vector2(0.0f, -50.0f);
 
     private void Start()
     {
         var scene = gameObject.scene;
         SceneManager.SetActiveScene(scene);
         player = GameManager.instance.Player.transform;
-        lastEndPoint = firstLevelPart.Find("End Point").position;
+        lastEndPoint = firstEndPoint.position;
+        chunkQueue = new Queue<Transform>();
+        StartCoroutine(InitializeChunks());
     }
 
     private void Update()
@@ -26,16 +32,44 @@ public class InfiniteLevelGenerator : MonoBehaviour
             SpawnNextLevelPart();
     }
 
-    private void SpawnNextLevelPart()
+    private IEnumerator InitializeChunks()
     {
-        Transform nextLevelPart = levelPartList[Random.Range(0, levelPartList.Count)];
-        SpawnNextLevelPart(nextLevelPart);
+        while (true)
+        {
+            var nextChunk = Instantiate(chunkPrefab, tempStartPosition, Quaternion.identity, transform);
+            var nextChunkScript = nextChunk.GetComponent<GenerateTiles>();
+
+            while (!nextChunkScript.IsChunkReady)
+                yield return null;
+
+            chunkQueue.Enqueue(nextChunk);
+
+            while (chunkQueue.Count >= maxPreloadedChunks)
+                yield return null;
+        }
     }
 
-    private void SpawnNextLevelPart(Transform nextLevelPart)
+    private void SpawnNextLevelPart()
     {
-        Vector2 offset = nextLevelPart.Find("Start Point").localPosition;
-        var newLevelPart = Instantiate(nextLevelPart, lastEndPoint - offset, Quaternion.identity);
-        lastEndPoint = newLevelPart.Find("End Point").position;
+        Transform nextChunk;
+
+        if (chunkQueue.Count > 0)
+        {
+            nextChunk = chunkQueue.Dequeue();
+        }
+        else
+        {
+            var nextChunkPrefab = chunkList[Random.Range(0, chunkList.Count)];
+            nextChunk = Instantiate(nextChunkPrefab, tempStartPosition, Quaternion.identity, transform);
+        }
+
+        RepositionNextChunk(nextChunk);
+    }
+
+    private void RepositionNextChunk(Transform nextChunk)
+    {
+        Vector2 offset = nextChunk.Find("Start Point").localPosition;
+        nextChunk.position = lastEndPoint - offset;
+        lastEndPoint = nextChunk.Find("End Point").position;
     }
 }

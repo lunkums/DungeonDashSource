@@ -18,7 +18,7 @@ public class Damageable : MonoBehaviour, IDamageable
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
 
-    private void Awake()
+    private void Initialize()
     {
         currentHealth = maxHealth;
         currentTime = 0;
@@ -27,6 +27,8 @@ public class Damageable : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
+        Initialize();
+
         OnDamaged += stateHandler.SetDamagedState;
         OnDestruct += stateHandler.SetDeathState;
     }
@@ -51,18 +53,13 @@ public class Damageable : MonoBehaviour, IDamageable
 
             if (currentHealth <= 0)
             {
-                Destruct();
+                OnDestruct?.Invoke();
             }
             else
             {
                 OnDamaged?.Invoke();
             }
         }
-    }
-
-    public void Destruct()
-    {
-        OnDestruct?.Invoke();
     }
 
     public void RevertDamage(int damage)
@@ -77,6 +74,6 @@ public class Damageable : MonoBehaviour, IDamageable
 
     public bool CanBeDamaged()
     {
-        return currentTime >= nextDamageTime;
+        return currentHealth > 0 && currentTime >= nextDamageTime;
     }
 }

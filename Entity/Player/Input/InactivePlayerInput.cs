@@ -1,12 +1,14 @@
 ﻿public class InactivePlayerInput : PlayerInput
 {
-    public override bool Jump { get => false; }
+    public override bool Jump => false;
 
-    public override bool JumpPressed { get => false; }
+    public override bool JumpPressed => false;
 
-    public override bool Attack { get => false; }
+    public override bool Attack => false;
 
-    public override bool Roll { get => false; }
+    public override bool Roll => false;
 
-    public override bool Test { get => false; }
+    public override bool Test => false;
+
+    public override bool FallThrough => false;
 }

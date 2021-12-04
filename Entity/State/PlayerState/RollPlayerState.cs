@@ -1,20 +1,16 @@
 public class RollPlayerState : GroundedPlayerState
 {
-    public RollPlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, "Roll")
-    {
-    }
+    public RollPlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, "Roll") { }
 
     public override void Enter()
     {
         base.Enter();
         Entity.Audio.Play("player_roll");
-        Entity.Movement.EnableRollHurtbox(true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        Entity.Movement.EnableRollHurtbox(false);
     }
 
     public override void Update()
@@ -22,13 +18,13 @@ public class RollPlayerState : GroundedPlayerState
         if (Entity.Movement.IsGrounded())
         {
             if (Entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
-                StateMachine.SetState(new RunPlayerState(Entity, StateMachine));
+                StateMachine.SetState(Entity.InitialState(StateMachine));
             else if (Entity.InputController.Jump)
-                StateMachine.SetState(new JumpPlayerState(Entity, StateMachine));
+                StateMachine.SetState(Entity.JumpState(StateMachine));
+            else if (Entity.InputController.FallThrough)
+                Entity.Movement.DisablePlatformCollisions();
         }
         else
-        {
-            StateMachine.SetState(new FallPlayerState(Entity, StateMachine));
-        }
+            StateMachine.SetState(Entity.FallPlayerState(StateMachine));
     }
 }

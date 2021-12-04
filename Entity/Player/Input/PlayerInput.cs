@@ -9,4 +9,5 @@ public abstract class PlayerInput : IPlayerInput
     public abstract bool Attack { get; }
     public abstract bool Roll { get; }
     public abstract bool Test { get; }
+    public abstract bool FallThrough { get; }
 }

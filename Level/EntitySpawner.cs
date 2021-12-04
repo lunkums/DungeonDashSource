@@ -3,7 +3,7 @@ using UnityEngine;
 public class EntitySpawner : MonoBehaviour
 {
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private GameObject entityPrefab;
+    [SerializeField] private string entityName;
 
     private bool activated;
 
@@ -12,18 +12,11 @@ public class EntitySpawner : MonoBehaviour
         activated = false;
     }
 
-    private void SpawnEntity()
-    {
-        Instantiate(entityPrefab, spawnPoint.position, Quaternion.identity);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject collider = collision.gameObject;
-
-        if (collider.CompareTag("Player") && !activated)
+        if (!activated)
         {
-            SpawnEntity();
+            ObjectPooler.instance.SpawnObject(entityName, spawnPoint.position);
             activated = true;
         }
     }

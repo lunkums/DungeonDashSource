@@ -4,9 +4,11 @@ public interface IEntity
 {
     Animator Animator { get; }
 
-    State InitialState(StateMachine stateMachine);
+    void Respawn(Vector2 position);
 
-    State DamagedState(StateMachine stateMachine);
+    IState InitialState(StateMachine stateMachine);
 
-    State DeathState(StateMachine stateMachine);
+    IState DamagedState(StateMachine stateMachine);
+
+    IState DeathState(StateMachine stateMachine);
 }

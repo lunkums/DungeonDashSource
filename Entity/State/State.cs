@@ -1,12 +1,12 @@
-﻿public abstract class State : IState
+﻿public abstract class State<E> : IState where E : IEntity
 {
-    private IEntity entity;
+    private E entity;
     private StateMachine stateMachine;
 
-    public IEntity Entity => entity;
+    public E Entity => entity;
     public StateMachine StateMachine => stateMachine;
 
-    public State(IEntity entity, StateMachine stateMachine)
+    public State(E entity, StateMachine stateMachine)
     {
         this.entity = entity;
         this.stateMachine = stateMachine;

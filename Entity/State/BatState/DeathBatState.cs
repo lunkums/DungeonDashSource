@@ -1,8 +1,6 @@
 ﻿public class DeathBatState : BatState
 {
-    public DeathBatState(Bat entity, StateMachine stateMachine) : base(entity, stateMachine, "Death")
-    {
-    }
+    public DeathBatState(Bat entity, StateMachine stateMachine) : base(entity, stateMachine, "Death") { }
 
     public override void Enter()
     {
@@ -12,11 +10,5 @@
         Entity.EnableHitbox(false);
     }
 
-    public override void FixedUpdate()
-    {
-    }
-
-    public override void Update()
-    {
-    }
+    public override void FixedUpdate() { }
 }

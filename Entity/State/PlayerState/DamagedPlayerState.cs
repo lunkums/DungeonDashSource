@@ -2,9 +2,7 @@ using System;
 
 public class DamagedPlayerState : PlayerState
 {
-    public DamagedPlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, entity.Movement.IsGrounded() ? "Run" : "Fall")
-    {
-    }
+    public DamagedPlayerState(Player entity, StateMachine stateMachine) : base(entity, stateMachine, entity.Movement.IsGrounded() ? "Run" : "Fall") { }
 
     public override void Enter()
     {
@@ -17,11 +15,6 @@ public class DamagedPlayerState : PlayerState
 
     public override void Update()
     {
-        PlayerState nextState = new RunPlayerState(Entity, StateMachine);
-
-        if (!Entity.Movement.IsGrounded())
-            nextState = new FallPlayerState(Entity, StateMachine);
-
-        StateMachine.SetState(nextState);
+        StateMachine.SetState(Entity.Movement.IsGrounded() ? Entity.InitialState(StateMachine) : Entity.FallPlayerState(StateMachine));
     }
 }

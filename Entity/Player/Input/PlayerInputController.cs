@@ -14,6 +14,7 @@ public class PlayerInputController : MonoBehaviour
     public bool Roll => GetButtonStatus("Roll");
     public bool Test => GetButtonStatus("Test");
     public bool Start => GetButtonStatus("Start");
+    public bool FallThrough => GetButtonStatus("FallThrough");
 
     private void Awake()
     {
@@ -25,7 +26,8 @@ public class PlayerInputController : MonoBehaviour
             new ButtonInput("Attack", bufferTime),
             new ButtonInput("Roll", bufferTime),
             new ButtonInput("Test", bufferTime),
-            new ButtonInput("Start", bufferTime)
+            new ButtonInput("Start", bufferTime),
+            new ButtonInput("FallThrough", bufferTime)
         };
     }
 
@@ -85,6 +87,9 @@ public class PlayerInputController : MonoBehaviour
                     break;
                 case ("Start"):
                     button.SetButtonStatus(input.Start, Time.time);
+                    break;
+                case ("FallThrough"):
+                    button.SetButtonStatus(input.FallThrough, Time.time);
                     break;
             }
         }

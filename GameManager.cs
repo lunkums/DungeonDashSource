@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public static int ForegroundLayer => LayerMask.NameToLayer("Foreground");
+    public static int PlatformLayer => LayerMask.NameToLayer("Platform");
+    public static int GroundedLayer => LayerMask.NameToLayer("Grounded");
+    public static int IgnorePlatformGroundedLayer => LayerMask.NameToLayer("Ignore Platform Grounded");
+
     [SerializeField] private GameObject[] dependentComponents;
     [SerializeField] private string activeSceneName = "InfiniteRunnerTest";
+    [SerializeField] private Transform playerTracker;
 
     public Player Player { get; set; }
 
@@ -18,6 +24,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         StartCoroutine(LoadActiveSceneCoroutine());
+    }
+
+    private void FixedUpdate()
+    {
+        var newPosition = new Vector2(Player.transform.position.x, 0);
+        playerTracker.position = newPosition;
     }
 
     private IEnumerator LoadActiveSceneCoroutine()
@@ -41,5 +53,10 @@ public class GameManager : MonoBehaviour
         {
             component.SetActive(true);
         }
+    }
+
+    public void RespawnPlayer()
+    {
+        Player.Respawn(Player.Movement.LastSafePosition);
     }
 }

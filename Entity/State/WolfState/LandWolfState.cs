@@ -1,13 +1,11 @@
 public class LandWolfState : GroundedWolfState
 {
-    public LandWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Land")
-    {
-    }
+    public LandWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Land") { }
 
     public override void Update()
     {
         base.Update();
         if (IsCurrentAnimationPastTime(1.0f))
-            StateMachine.SetState(new SearchWolfState(Entity, StateMachine));
+            StateMachine.SetState(Entity.InitialState(StateMachine));
     }
 }

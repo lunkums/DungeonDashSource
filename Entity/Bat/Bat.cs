@@ -2,28 +2,36 @@ using UnityEngine;
 
 public class Bat : Entity
 {
+    private FlyBatState flyState;
+    private DeathBatState deathState;
+
     [SerializeField] private BatMovement movement;
     [SerializeField] private GameObject hitbox;
 
     public BatMovement Movement => movement;
+
+    private void OnEnable()
+    {
+        hitbox.SetActive(true);
+    }
 
     public void EnableHitbox(bool enabled)
     {
         hitbox.SetActive(enabled);
     }
 
-    public override State DamagedState(StateMachine stateMachine)
+    public override IState DamagedState(StateMachine stateMachine)
     {
         return null;
     }
 
-    public override State DeathState(StateMachine stateMachine)
+    public override IState DeathState(StateMachine stateMachine)
     {
-        return new DeathBatState(this, stateMachine);
+        return deathState ??= new DeathBatState(this, stateMachine);
     }
 
-    public override State InitialState(StateMachine stateMachine)
+    public override IState InitialState(StateMachine stateMachine)
     {
-        return new FlyBatState(this, stateMachine);
+        return flyState ??= new FlyBatState(this, stateMachine);
     }
 }

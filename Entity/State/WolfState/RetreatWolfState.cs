@@ -1,8 +1,6 @@
 public class RetreatWolfState : GroundedWolfState
 {
-    public RetreatWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Run")
-    {
-    }
+    public RetreatWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Run") { }
 
     public override void FixedUpdate()
     {
@@ -13,6 +11,6 @@ public class RetreatWolfState : GroundedWolfState
     {
         base.Update();
         if (!Entity.Input.IsPlayerBehind() && GameManager.instance.Player.Movement.IsGrounded())
-            StateMachine.SetState(new ChaseWolfState(Entity, StateMachine));
+            StateMachine.SetState(Entity.ChaseState(StateMachine));
     }
 }

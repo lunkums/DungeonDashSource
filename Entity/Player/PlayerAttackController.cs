@@ -6,8 +6,6 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private List<GameObject> hitboxes;
-    [SerializeField] private List<float> hitboxDurations;
     [SerializeField] private float comboTimeFrame;
     private float timeSinceLastAttack = 0f;
     private int lastAttackNumber = 0;
@@ -25,16 +23,6 @@ public class PlayerAttackController : MonoBehaviour
 
         player.Audio.Play("player_attack");
         OnAttack?.Invoke();
-        StartCoroutine(HitboxActivationCoroutine(attackNumber - 1));
-    }
-
-    private IEnumerator HitboxActivationCoroutine(int hitboxIndex)
-    {
-        hitboxes[hitboxIndex].SetActive(true);
-
-        yield return new WaitForSeconds(hitboxDurations[hitboxIndex]);
-
-        hitboxes[hitboxIndex].SetActive(false);
     }
 
     private void Update()

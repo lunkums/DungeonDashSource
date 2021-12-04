@@ -1,31 +1,31 @@
 public abstract class GroundedPlayerState : PlayerState
 {
-    public GroundedPlayerState(Player entity, StateMachine stateMachine, string animatorBoolean) : base(entity, stateMachine, animatorBoolean)
-    {
-    }
+    public GroundedPlayerState(Player entity, StateMachine stateMachine, string animatorBoolean) : base(entity, stateMachine, animatorBoolean) { }
 
     public override void Update()
     {
         if (Entity.Movement.IsGrounded())
         {
             if (Entity.InputController.Jump)
-                StateMachine.SetState(new JumpPlayerState(Entity, StateMachine));
+                StateMachine.SetState(Entity.JumpState(StateMachine));
             else if (Entity.InputController.Roll)
-                StateMachine.SetState(new RollPlayerState(Entity, StateMachine));
+                StateMachine.SetState(Entity.RollState(StateMachine));
             else if (Entity.InputController.Attack)
                 SetNextAttackState();
+            else if (Entity.InputController.FallThrough)
+                Entity.Movement.DisablePlatformCollisions();
             //else if (Entity.InputController.Test)
                 //StateMachine.SetState(new DamagedPlayerState(Entity, StateMachine));
         }
         else
         {
-            StateMachine.SetState(new FallPlayerState(Entity, StateMachine));
+            StateMachine.SetState(Entity.FallPlayerState(StateMachine));
         }
     }
 
     protected virtual void SetNextAttackState()
     {
-        PlayerState nextAttackState = new Attack1PlayerState(Entity, StateMachine);
+        PlayerState nextAttackState = Entity.Attack1State(StateMachine);
 
         if (Entity.AttackController.TimeSinceLastAttack < Entity.AttackController.ComboTimeFrame)
         {
@@ -34,10 +34,10 @@ public abstract class GroundedPlayerState : PlayerState
             switch (nextAttackNumber)
             {
                 case 2:
-                    nextAttackState = new Attack2PlayerState(Entity, StateMachine);
+                    nextAttackState = Entity.Attack2State(StateMachine);
                     break;
                 case 3:
-                    nextAttackState = new Attack3PlayerState(Entity, StateMachine);
+                    nextAttackState = Entity.Attack3State(StateMachine);
                     break;
                 default:
                     break;

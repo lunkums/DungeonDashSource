@@ -1,8 +1,6 @@
 public class AttackWolfState: FallWolfState
 {
-    public AttackWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Attack")
-    {
-    }
+    public AttackWolfState(Wolf entity, StateMachine stateMachine) : base(entity, stateMachine, "Attack") { }
 
     public override void Enter()
     {

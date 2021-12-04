@@ -7,8 +7,7 @@ public class WolfInput : MonoBehaviour
     [SerializeField] private float attackRadius;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private GameObject hitbox;
-    [SerializeField] private Transform rayPoint;
-    [SerializeField] private LayerMask raycastLayer;
+    [SerializeField] private Transform holeDetectionPoint;
 
     public GameManager GameManager => gameManager;
 
@@ -23,6 +22,7 @@ public class WolfInput : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, searchRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        Gizmos.DrawWireSphere(holeDetectionPoint.position, 0.125f);
     }
 
     public bool IsPlayerInSearchRange()
@@ -39,7 +39,7 @@ public class WolfInput : MonoBehaviour
 
     public bool IsPlayerBehind()
     {
-        Vector2 selfPosition = attackPoint.transform.position;
+        Vector2 selfPosition = attackPoint.position;
         Vector2 playerPosition = GameManager.Player.transform.position;
         return selfPosition.x > playerPosition.x;
     }
@@ -51,15 +51,6 @@ public class WolfInput : MonoBehaviour
 
     public bool IsThereAHole()
     {
-        bool holeDetected = true;
-
-        Vector2 direction = (rayPoint.transform.position - transform.position).normalized;
-        Debug.DrawRay(transform.position, direction / 2.0f, Color.red);
-        var rayHit = Physics2D.Raycast(transform.position, direction, 1 / 2.0f, raycastLayer);
-
-        if (rayHit)
-            holeDetected = false;
-
-        return holeDetected;
+        return !UtilityEntityMovement.IsGrounded(holeDetectionPoint);
     }
 }

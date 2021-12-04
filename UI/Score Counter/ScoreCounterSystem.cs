@@ -12,7 +12,7 @@ public class ScoreCounterSystem
     public int GetScore()
     {
         var score = 0.0f;
-        score += player.Movement.TotalDistance * 10;
+        score += player.Movement.TotalDistance;
         return Mathf.RoundToInt(score);
     }
 }
